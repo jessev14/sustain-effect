@@ -1,0 +1,45 @@
+{
+    "id": "sustain-effect",
+    "title": "Sustain Effect",
+    "description": "",
+    "authors": [
+        {
+            "name": "enso",
+            "discord": "enso#0361"
+        }
+    ],
+    "version": "1.0.0",
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10"
+    },
+    "esmodules": [
+        "./scripts/sustain-effect.js"
+    ],
+    "styles": [
+        "./styles/sustain-effect.css"
+    ],
+    "languages": [],
+    "relationships": {
+        "requires": [
+            {
+                "id": "action-reaction-count",
+                "type": "module",
+                "compatibility": {
+                    "minimum": "1"
+                }
+            },
+            {
+                "id": "item-properties",
+                "type": "module",
+                "compatibility": {
+                    "minimum": "1"
+                }
+            }
+        ]
+    },
+    "flags": {},
+    "url": "",
+    "manifest": "",
+    "download": ""
+}

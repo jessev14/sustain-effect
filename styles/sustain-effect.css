@@ -1,0 +1,10 @@
+#sustain-effect label {
+    align-items: center;
+    justify-content: space-between;
+}
+
+#sustain-effect img {
+    flex: 0;
+    width: 50px;
+    margin-right: 20px;
+}
