@@ -17,9 +17,11 @@ Hooks.on('dnd5e.useItem', async (item, config, options, templates) => {
     const isSustain = item.system.properties?.sustain || item.getFlag('item-properties', 'itemProperties')?.[sustainKey];
     if (!isSustain) return;
 
+    const variant = options.activationConfig?.variant;
     const toCreate = [];
     for (const effect of item.effects) {
         if (effect.disabled || effect.transfer) continue;
+        if (variant && !effect.name.includes(variant)) continue;
 
         const effectData = effect.toJSON();
         effectData.origin = item.uuid;
