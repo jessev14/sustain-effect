@@ -9,7 +9,7 @@ Hooks.once('init', () => {
     CONFIG.DND5E.weaponProperties.sustain = 'Sustain';
 
     const itemProperties = game.settings.get('item-properties', 'itemProperties');
-    sustainKey = Object.keys(itemProperties).find(k => ['sustain', 'Sustain'].includes(itemProperties[k]));
+    sustainKey = Object.entries(itemProperties).find(([k, v])=> ['sustain', 'Sustain'].includes(v.name))[0];
 });
 
 
