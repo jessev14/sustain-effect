@@ -6,15 +6,16 @@ const lg = x => console.log(x);
 let sustainKey;
 
 Hooks.once('init', () => {
-    CONFIG.DND5E.weaponProperties.sustain = 'Sustain';
+    CONFIG.DND5E.itemProperties.sustain = {label: 'Sustain'};
+    CONFIG.DND5E.validProperties.weapon.add('sustain');
 
     const itemProperties = game.settings.get('item-properties', 'itemProperties');
-    sustainKey = Object.entries(itemProperties).find(([k, v])=> ['sustain', 'Sustain'].includes(v.name))[0];
+    sustainKey = Object.entries(itemProperties).find(([k, v])=> ['sustain', 'Sustain'].includes(v.name))?.[0];
 });
 
 
 Hooks.on('dnd5e.useItem', async (item, config, options, templates) => {
-    const isSustain = item.system.properties?.sustain || item.getFlag('item-properties', 'itemProperties')?.[sustainKey];
+    const isSustain = item.system.properties.has('sustain') || item.getFlag('item-properties', 'itemProperties')?.[sustainKey];
     if (!isSustain) return;
 
     const variant = options.activationConfig?.variant;
@@ -41,8 +42,6 @@ Hooks.on('dnd5e.useItem', async (item, config, options, templates) => {
     return item.setFlag(moduleID, 'sustainActive', true);
 });
 
-// Hooks.on('combatTurn', unsustainItems);
-// Hooks.on('combatRound', unsustainItems);
 Hooks.on('updateCombat', unsustainItems);
 
 async function unsustainItems(combat, diff, options, userID) {
@@ -63,7 +62,10 @@ async function unsustainItems(combat, diff, options, userID) {
         const sustainDuration = effects.reduce((acc, current) => {
             return Math.max(acc, Math.floor(current.duration.remaining));
         }, 0);
-        if (sustainDuration < 1) continue;
+        if (sustainDuration < 1) {
+            await unsustainItem(item);
+            continue;
+        };
 
         content += `
             <label class="flexrow" data-item-uuid="${item.uuid}">

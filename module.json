@@ -11,7 +11,7 @@
     "version": "1.0.0",
     "compatibility": {
         "minimum": "10",
-        "verified": "11"
+        "verified": "12"
     },
     "esmodules": [
         "./scripts/sustain-effect.js"
@@ -21,6 +21,16 @@
     ],
     "languages": [],
     "relationships": {
+        "systems": [
+            {
+                "id": "dnd5e",
+                "type": "system",
+                "compatibility": {
+                    "minimum": "3.0.0",
+                    "verified": "3.2.0"
+                }
+            }
+        ],
         "requires": [
             {
                 "id": "action-reaction-count",
