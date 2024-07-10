@@ -6,11 +6,17 @@ const lg = x => console.log(x);
 let sustainKey;
 
 Hooks.once('init', () => {
-    CONFIG.DND5E.itemProperties.sustain = {label: 'Sustain'};
+    CONFIG.DND5E.itemProperties.sustain = { label: 'Sustain' };
     CONFIG.DND5E.validProperties.weapon.add('sustain');
 
+    CONFIG.DND5E.spellComponents.sustain = {
+        label: 'Sustain',
+        abbr: "SU"
+    };
+    CONFIG.DND5E.validProperties.spell.add('sustain');
+
     const itemProperties = game.settings.get('item-properties', 'itemProperties');
-    sustainKey = Object.entries(itemProperties).find(([k, v])=> ['sustain', 'Sustain'].includes(v.name))?.[0];
+    sustainKey = Object.entries(itemProperties).find(([k, v]) => ['sustain', 'Sustain'].includes(v.name))?.[0];
 });
 
 
@@ -35,7 +41,7 @@ Hooks.on('dnd5e.useItem', async (item, config, options, templates) => {
     if (!toCreate.length) return;
 
     if (item.getFlag(moduleID, 'sustainActive')) await unsustainItem(item);
-    
+
     const cls = getDocumentClass('ActiveEffect');
     await cls.createDocuments(toCreate, { parent: item.actor });
 
@@ -116,7 +122,7 @@ async function unsustainItems(combat, diff, options, userID) {
 
 Hooks.on('deleteActiveEffect', (ae, options, userID) => {
     if (game.user.id !== userID) return;
-    
+
     const actor = ae.parent;
     if (!(actor instanceof Actor)) return;
 
